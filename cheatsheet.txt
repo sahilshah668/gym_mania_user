@@ -1,0 +1,84 @@
+//cheatsheet for server
+
+// cb is callback function or promises
+
+//promises are .then function when one condition get over uske baad kya  hona chahiye wo isme likhneka
+
+const app = express();// app variable will get all functinality of express
+
+//always defined middleware function in server.js file
+app.use('anything here') // this is used to use the middleware funtion 
+
+app.static(root, [options])// this will direct to the static directory in the main folder
+//this will be used when we are creating small single page web 
+Note:app is always used in server file only
+app.get('path',cb) // this will send request to server for particular path url
+app.post('path',cb) // this will get data  to server from user
+app.put('path',cb) // this will update the pparticular path attributes
+app.delete('path',cb) // this will delete the particular value from db
+
+//to make particular file for particular module use route instead
+const express =  require('express)
+const router = express.Router()
+router.get('path',cb) // this will send request to server for particular path url
+router.post('path',cb) // this will get data  to server from user
+router.put('path',cb) // this will update the pparticular path attributes
+
+//require('module-name or directory ) //this will be used to require anything from one directory to another 
+
+require('express) //if its a installed dependency
+require('./images/xyz) // user created file
+
+const bcrypt = require('bcryptjs)
+const  bcrypt = require('../../model/bcrypt')
+
+//mongoose
+
+mongoose.connect(root) // to connect to the specified db 
+modelName.find([]) // this will find all values from specific databse
+modelName.findOne({}) // this is used for find one thing from the specific database
+modelName.findById() // this is used for find one specific id from the specific database
+modelName.findOneAndupdate({}) // this is used for find one and update from the specific database
+
+
+multer // this module is used to get image from the client
+
+cloudinary // it is a platform to upload our incoming image in cloudinary database
+
+passport // it is used for authentication
+
+passport.use(new any-passport-strategy, cb)
+
+bcrypt // it is used to hash the password
+
+//method for bcrypt
+
+bcrypt.genSalt(no-of-salt,(cb,done))
+
+//hasing technique
+
+
+
+//request and response
+
+request is used to fetch the required details from user using body parser
+
+like if we have to fetch user name and contact
+
+const newUser = {
+    name:req.body.name,
+    contact:req.body.contact
+}
+
+//Note: attribute should be same as mentioned in databse scchema
+
+//response
+
+res.render('');//rendering the full html page using template engiene
+res.json('')// send the json data to the client
+res.status()//displays the status of the server to the client
+res.redireect('/admin')//redirects to the specified url
+
+
+
+
