@@ -42,6 +42,7 @@ router.post(
       name: req.body.name,
       avatar: req.body.avatar,
       // image: result.secure_url,
+      text:req.body.text,
       caption: req.body.caption,
       User: req.user.id
     });

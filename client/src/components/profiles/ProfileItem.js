@@ -14,12 +14,9 @@ class ProfileItem extends Component {
             <img src={profile.user.avatar} alt="" className="rounded-circle" />
           </div>
           <div className="col-lg-6 col-md-4 col-8">
-            <h3>{profile.user.name}</h3>
-           
-            <Link to={`/profile/${profile.handle}`} className="btn btn-info">
-              View Profile
-            </Link>
-          </div>
+            <h3>{profile.userName}</h3>
+            <p className="lead">{profile.bio}</p>
+        </div>
         </div>
       </div>
     );

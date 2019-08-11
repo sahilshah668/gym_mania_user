@@ -19,6 +19,13 @@ router.get(
   }
 );
 
+router.get('/useraccount/all', passport.authenticate('jwt',{session:false}),(req,res) => {
+  Account.find({})
+   .then(account => {
+     res.json(account)
+   }).catch(err => console.log(err))
+})
+
 router.post(
   "/useraccount",
   passport.authenticate("jwt", { session: false }),

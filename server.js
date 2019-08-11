@@ -23,6 +23,10 @@ mongoose
 //passport initializing
 app.use(passport.initialize());
 
+
+app.get('/', (req,res) => {
+  res.send('hello world')
+})
 //config passport
 require("./config/passport")(passport);
 

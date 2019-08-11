@@ -1,16 +1,16 @@
 img {
   width: 100%;
 }
-
+/* 
 .landing {
   position: relative;
-  background: url('./img/gym.jpg') no-repeat;
+  background: url('./img/background.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
   margin-top: -24px;
   margin-bottom: -50px;
-}
+} */
 
 .landing-inner {
   padding-top: 80px;
@@ -41,3 +41,37 @@ img {
 
 /* navbar */
 
+.icon-bar {
+  width: 100%; /* Full-width */
+  background-color: #99ffff; /* Dark-grey background */
+  overflow: auto; /* Overflow due to float */
+}
+
+.icon-bar a  {
+  float: left; /* Float links side by side */
+  text-align: center; /* Center-align text */
+  width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+  padding: 12px 0; /* Some top and bottom padding */
+  transition: all 0.3s ease; /* Add transition for hover effects */
+  color: black; /* White text color */
+  font-size: 36px; /* Increased font size */
+}
+
+.icon-bar a:hover {
+  background-color: #009999; /* Add a hover color */
+}
+
+.active {
+  background-color: #4CAF50; /* Add an active/current color */
+}
+
+.login {
+  /* position: relative;
+  background: url('./img/background.jpg') no-repeat;
+  background-size: cover;
+  background-position: center; */
+  height: 100vh;
+  width:1500px;
+  margin-top: -24px;
+  margin-bottom: -50px;
+}

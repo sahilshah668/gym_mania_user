@@ -81,8 +81,7 @@ router.get(
   (req, res) => {
     res.json({
       id: req.user.id,
-      name: req.user.name,
-      avatar: req.user.avatar
+      Name: req.user.Name,
     });
   }
 );

@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import PostItem from './PostItem';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 
-class PostFeed extends Component {
+import PostItem from './PostItem'
+   class PostFeed extends Component {
   render() {
-    const { posts } = this.props;
+      const {posts} = this.props
 
-    return posts.map(post => <PostItem key={post._id} post={post} />);
+      return posts.map(post => <PostItem key={posts._id} post={post}/> )
   }
 }
 
-PostFeed.propTypes = {
-  posts: PropTypes.array.isRequired
-};
+PostFeed.propTypes ={ 
+    posts:PropTypes.array.isRequired
+}
 
-export default PostFeed;
+export default PostFeed

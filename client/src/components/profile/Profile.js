@@ -1,67 +1,82 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import ProfileHeader from './ProfileHeader';
-import ProfileAbout from './ProfileAbout';
-import Spinner from '../common/Spinner';
-import { getProfileByHandle } from '../../actions/profileAction';
-
+import { getCurrentProfile } from '../../actions/profileActions'
+import {Link} from 'react-router-dom'
+import {GridLoader} from 'react-spinners' 
 class Profile extends Component {
-  componentDidMount() {
-    if (this.props.match.params.id) {
-      this.props.getProfileByHandle(this.props.match.params.id);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profile === null && this.props.profile.loading) {
-      this.props.history.push('/not-found');
-    }
-  }
-
+   componentDidMount() {
+     this.props.getCurrentProfile()
+   }
   render() {
-    const { profile, loading } = this.props.profile;
-    let profileContent;
+    const { user } = this.props.auth
+    const {profile,loading} = this.props.profile
 
-    if (profile === null || loading) {
-      profileContent = <Spinner />;
-    } else {
-      profileContent = (
-        <div>
-          <div className="row">
-            <div className="col-md-6">
-              <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                Back To Profiles
-              </Link>
+     let profileContent
+
+     if(profile === null || loading) {
+       profileContent = (
+        <GridLoader
+        sizeUnit={"px"}
+        size={10}
+        color={'black'}
+        style={{margin:'auto',display:'block'}}
+      />
+       )
+     }else {
+       if(Object.keys(profile).length > 0) {
+         profileContent = (
+           <div>
+              <p className="lead text-muted">
+              Welcome {user.name}
+              </p>
+              <p className="lead text-muted">
+              Bio: {profile.bio}
+              </p>
+
+              <Link to="/edit-prrofile" className="btn btn-warning btn-md">Edit Profile</Link>
+           </div>
+         )
+       }else {
+          profileContent = (
+            <div>
+              <p className="lead text-muted">
+              Welcome {user.name}
+              </p>
+              <p>You have not yet created Your Profile ,please add some info </p>
+              <Link to='/create-profile' className="btn btn-primary btn-lg">Create Profile</Link>
             </div>
-            <div className="col-md-6" />
-          </div>
-          <ProfileHeader profile={profile} />
-          <ProfileAbout profile={profile} />
-        </div>
-      );
-    }
+          )
+       }
+     }
 
     return (
       <div className="profile">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">{profileContent}</div>
+            <div className="col-md-12">
+                <h4 className="display-7">Hello {' '} {user.name}</h4>
+                <br />
+                <br />
+                {profileContent}
+                
+            </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-Profile.propTypes = {
-  getProfileByHandle: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired
-};
+Profile.propTypes= {
+  getCurrentProfile:PropTypes.func.isRequired,
+  profile:PropTypes.object.isRequired,
+  auth:PropTypes.object.isRequired
+}
 
-const mapStateToProps = state => ({
-  profile: state.profile
-});
+const mapStatetoProps = (state) => ({
+  auth : state.auth, 
+  profile :   state.profile
+})
 
-export default connect(mapStateToProps, { getProfileByHandle })(Profile);
+export default connect(mapStatetoProps,{getCurrentProfile})(Profile)

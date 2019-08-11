@@ -1,77 +1,136 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {LoginUser} from '../../actions/authAction' 
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/authActions';
+import TextFieldGroup from '../common/TextFieldGroup';
+// import google from '../../img/google.jpg'
+// import logo from '../../img/images (5).jpg'
+class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      errors: {}
+    };
 
- class Login extends Component {
-     constructor() {
-         super();
-         this.state = {
-             email:'',
-             password:'',
-             errors:{}
-         }
-         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-     }
-     componentDidMount() {
-       if(this.props.auth.isAuthenticated) {
-         this.props.history.push('/dashboard')
-       }
-     }
-     componentWillReceiveProps(nextProps) {
-       if(nextProps.auth.isAuthenticated) {
-         this.props.history.push('/dashboard')
-       }
-      //  if(nextProps.errors) {
-      //    this.setState({errors:nextProps.errors})
-      //  }
-     }
-     onChange(e) {
-        this.setState({[e.target.name]:e.target.value})
-    }
-    onSubmit(e) {
-        e.preventDefault();
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-        const userData = {
-            
-            email:this.state.email,
-            password:this.state.password,
-            }
-        this.props.LoginUser(userData)
+  componentDidMount() {
+    const {isAuthenticated} = this.props.auth
+    if (isAuthenticated) {
+      this.props.history.push('/dashboard');
     }
+    console.log('didmount')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('recieve props')
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    this.props.loginUser(userData);
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
   render() {
-      // const {errors} = this.state
-    return (
-        <div className="login">
-    <div className="container">
-      <div className="row">
-        <div className="col-md-8 m-auto">
-          <h1 className="display-4 text-center">Log In</h1>
-          <p className="lead text-center">Sign in to your DevConnector account</p>
-          <form onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input type="email" className="form-control form-control-lg" placeholder="Email Address" name="email" value={this.state.email} onChange={this.onChange} required/>
+    const { errors } = this.state;
+
+    return (                               
+          <div className="landing">
+        <div className=" landing-inner text-light">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-3"></div>
+              <div className="col-md-4 text-center" style={{left:'5%'}}>
+                  <div className="card" style={{backgroundColor:'#04848D'}}>
+                    <div className="card-header">
+                      {/* <img src={logo}></img> */}
+                      <h3>FITHUB</h3>
+                    </div>
+                    <div className="card-body">
+                    <form onSubmit={this.onSubmit}>
+                <TextFieldGroup        
+                  placeholder="Email Address"
+                  name="email"
+                  type="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  style={{borderRadius:'7.3rem !important'}}  
+                />
+
+                <TextFieldGroup
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                />
+                <div className="row">
+                  <div className="col-md-5">
+                  <small onSubmit={this.forget} style={{color:'blue'}}>Forget Password</small>
+                  </div>
+                  <div className="col-md-7"></div>
+                </div>
+               
+                <input type="submit" className="btn btn-info btn-block mt-4" />
+              </form>
+
+                    </div>
+                    <div className="card-footer">
+                    <h4 className="text-center" >OR </h4>
+                            <small className="text-center" >Login With</small>
+                     <div className="row">
+                            
+                     <div className="col-md-2"></div>
+                     {/* <div className="col-md-4">
+                     <img src={google} height="50px" style={{width:49, borderRadius:35}}></img>
+                     </div>
+                     <div className="col-md-4">
+                     <img src={google} height="50px" style={{width:49, borderRadius:35}}></img>
+                     </div> */}
+                     </div>
+                     
+                    </div>
+                  </div>
+              </div>
+              <div className="col-md-3"></div>
             </div>
-            <div className="form-group">
-              <input type="password" className="form-control form-control-lg" placeholder="Password" name="password" value={this.state.password} onChange={this.onChange} />
-            </div>
-            <input type="submit" className="btn btn-info btn-block mt-4" />
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-    )
+    );
   }
 }
+
 Login.propTypes = {
-  LoginUser:PropTypes.func.isRequired,
-  auth:PropTypes.object.isRequired,
-  // err:PropTypes.object.isRequired
-}
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
-  auth:state.auth,
-  err:state.err
-})
-export default connect(mapStateToProps,{ LoginUser })(Login)
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
